@@ -10,6 +10,8 @@
 
 import yaml
 
+import redis
+
 from os import statvfs_result
 
 from flask import Flask, jsonify, request, session, render_template, url_for, redirect, flash
@@ -32,6 +34,10 @@ latitude =""
 app = Flask(__name__) 
 
 app.secret_key = PRIVATE-KEY-HERE
+
+# setting up redis as db
+app.config['REDIS_URL'] = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+redis_client = redis.from_url(app.config['REDIS_URL'])
 
 # Define a Prometheus Counter
 requests_counter = Counter('http_requests_total', 'Total HTTP requests')

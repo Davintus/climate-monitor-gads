@@ -1,10 +1,9 @@
 version: '3'
 services:
-  python-app:
+  flask-app:
     build: .
     ports:
-      - "80:80"
-      - "8000:8000"  # Expose port for Prometheus scraping
+      - "5000:5000"  # Expose the Flask app port
 
   prometheus:
     image: prom/prometheus
@@ -25,5 +24,15 @@ services:
     depends_on:
       - prometheus
 
+  alertmanager:
+    image: prom/alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/config.yml
+
+  redis:
+    image: redis:latest
+
 volumes:
-  grafana-data:
+  grafana-data: 
