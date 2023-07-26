@@ -1,0 +1,27 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: smtppro.zoho.com:465
+  smtp_from: cloudteam@uplandengineering.com
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: email-alerts
+
+
+inhibit_rules:
+    - source_match:
+        severity: 'critical'
+      target_match:
+        severity: 'warning'
+      equal: ['alertname']
+    
+
+receivers:
+- name: 'email-alerts'
+  email_configs:
+    - to: 'cloudteam@uplandengineering.com'
+      send_resolved: true
+

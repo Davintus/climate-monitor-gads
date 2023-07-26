@@ -8,9 +8,7 @@
 #env for the location and climate // pip install geopy && pip install meteostat && pip install requests
 #Install Python 3.6 or higher 
 
-import yaml
 
-import redis
 
 from os import statvfs_result
 

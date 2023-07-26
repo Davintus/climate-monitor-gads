@@ -10,7 +10,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/etc/prometheus:ro
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
 
@@ -28,8 +28,10 @@ services:
     image: prom/alertmanager
     ports:
       - "9093:9093"
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
     volumes:
-      - ./alertmanager.yml:/etc/alertmanager/config.yml
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
 
   redis:
     image: redis:latest
